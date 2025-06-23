@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package currency;
+
+option go_package = "Currency-service/proto";
+
+service CurrencyService {
+  rpc CreateCurrency(CreateCurrencyRequest) returns(CurrencyResponse);
+  rpc GetCurrencies(GetCurrenciesRequest) returns(CurrencyResponse);
+  rpc GetListCurrencies(Empty) returns(ListCurrenciesResponse);
+  rpc DeleteAllCurrency(Empty) returns(DeleteCurrencyResponse);
+}
+
+message CreateCurrencyRequest {
+  string code = 1;                         //currency_code // DB
+  string name = 2;                         //currency_name // DB
+}
+
+message GetCurrenciesRequest {
+  string code = 1;
+}
+
+message CurrencyResponse {
+  string code = 1;
+  string name = 2;
+}
+
+message ListCurrenciesResponse {
+ repeated CurrencyResponse currency = 1;
+}
+
+message DeleteCurrencyResponse {
+  string message = 1;
+}
+
+message Empty{}
+
