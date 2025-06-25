@@ -12,6 +12,7 @@ import (
 	"google.golang.org/grpc/status"
 	"log"
 	"net"
+	"time"
 )
 
 type CurrencyServer struct {
@@ -73,14 +74,15 @@ func (s *CurrencyServer) DeleteAllCurrency(ctx context.Context, _ *proto2.Empty)
 }
 
 func RunService() {
-	lis, err := net.Listen("tcp", ":9000")
+	lis, err := net.Listen("tcp", ":8000")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	grpcServer := grpc.NewServer()
 	proto2.RegisterCurrencyServiceServer(grpcServer, &CurrencyServer{})
 
-	log.Printf("[gRPC] Server started on port: %v", lis.Addr())
+	log.Printf("[gRPC] Server started at time %v on port %v",
+		time.Now().Format("[2006-01-02] [15:04]"), lis.Addr().(*net.TCPAddr).Port)
 	if err = grpcServer.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
