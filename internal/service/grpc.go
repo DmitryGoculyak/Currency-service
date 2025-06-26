@@ -60,7 +60,6 @@ func (s *CurrencyServer) GetListCurrencies(ctx context.Context, _ *proto2.Empty)
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, status.Error(codes.NotFound, "Currency not found")
 		}
-		log.Fatal("Error:", err)
 		return nil, err
 	}
 	var currencies []*proto2.CurrencyResponse
