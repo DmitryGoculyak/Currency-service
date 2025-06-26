@@ -1,11 +1,11 @@
 package main
 
 import (
-	"Currency-service/internal/db"
-	"Currency-service/internal/service"
+	"Currency-service/internal/container"
 )
 
 func main() {
-	db.InitDB()
-	service.RunService()
+	app := container.Build()
+
+	app.Run()
 }
