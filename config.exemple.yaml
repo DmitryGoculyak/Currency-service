@@ -1,0 +1,11 @@
+database:
+  user: postgres
+  password: password
+  host: host.internal
+  port: 5432
+  dbname: currancy
+  sslmode: disable
+
+service:
+  host: 0.0.0.0
+  port: "8000"
