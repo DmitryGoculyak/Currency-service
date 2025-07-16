@@ -1,16 +1,16 @@
 package service
 
 import (
-	"Currency-service/internal/db/models"
+	"Currency-service/internal/entity"
 	repo "Currency-service/internal/repository"
 
 	"context"
 )
 
 type CurrencyServiceServer interface {
-	Create(ctx context.Context, code, name string) error
-	GetByCode(ctx context.Context, code string) (*models.CurrencyDB, error)
-	ListAll(ctx context.Context) ([]models.CurrencyDB, error)
+	Create(ctx context.Context, code, name string) (*entity.Currency, error)
+	GetByCode(ctx context.Context, code string) (*entity.Currency, error)
+	ListAll(ctx context.Context) ([]entity.Currency, error)
 }
 
 type CurrencyService struct {
@@ -25,14 +25,14 @@ func CurrencyServiceContainer(
 	}
 }
 
-func (s *CurrencyService) Create(ctx context.Context, code, name string) error {
+func (s *CurrencyService) Create(ctx context.Context, code, name string) (*entity.Currency, error) {
 	return s.repo.CreateCurrency(ctx, code, name)
 }
 
-func (s *CurrencyService) GetByCode(ctx context.Context, code string) (*models.CurrencyDB, error) {
+func (s *CurrencyService) GetByCode(ctx context.Context, code string) (*entity.Currency, error) {
 	return s.repo.GetCurrencyByCode(ctx, code)
 }
 
-func (s *CurrencyService) ListAll(ctx context.Context) ([]models.CurrencyDB, error) {
+func (s *CurrencyService) ListAll(ctx context.Context) ([]entity.Currency, error) {
 	return s.repo.GetAllCurrencies(ctx)
 }

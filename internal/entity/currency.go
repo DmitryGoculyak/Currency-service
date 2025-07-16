@@ -1,6 +1,6 @@
-package models
+package entity
 
-type CurrencyDB struct {
+type Currency struct {
 	CurrencyCode string `db:"currency_code"`
 	CurrencyName string `db:"currency_name"`
 }

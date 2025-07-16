@@ -24,11 +24,14 @@ func CurrencyHandlerConstructor(
 }
 
 func (h *CurrencyHandler) CreateCurrency(ctx context.Context, req *proto.CreateCurrencyRequest) (*proto.CurrencyResponse, error) {
-	err := h.service.Create(ctx, req.Code, req.Name)
+	code, err := h.service.Create(ctx, req.Code, req.Name)
 	if err != nil {
-		return nil, err
+		return nil, status.Error(codes.Internal, err.Error())
 	}
-	return &proto.CurrencyResponse{Code: req.Code, Name: req.Name}, nil
+	return &proto.CurrencyResponse{
+		Code: code.CurrencyCode,
+		Name: code.CurrencyName,
+	}, nil
 }
 
 func (h *CurrencyHandler) GetCurrencies(ctx context.Context, req *proto.GetCurrenciesRequest) (*proto.CurrencyResponse, error) {
@@ -39,7 +42,10 @@ func (h *CurrencyHandler) GetCurrencies(ctx context.Context, req *proto.GetCurre
 		}
 		return nil, status.Error(codes.Internal, "Database error")
 	}
-	return &proto.CurrencyResponse{Code: c.CurrencyCode, Name: c.CurrencyName}, nil
+	return &proto.CurrencyResponse{
+		Code: c.CurrencyCode,
+		Name: c.CurrencyName,
+	}, nil
 }
 
 func (h *CurrencyHandler) GetListCurrencies(ctx context.Context, _ *proto.Empty) (*proto.ListCurrenciesResponse, error) {
@@ -55,5 +61,7 @@ func (h *CurrencyHandler) GetListCurrencies(ctx context.Context, _ *proto.Empty)
 			Name: c.CurrencyName,
 		})
 	}
-	return &proto.ListCurrenciesResponse{Currency: list}, nil
+	return &proto.ListCurrenciesResponse{
+		Currency: list,
+	}, nil
 }

@@ -1,12 +1,12 @@
 package repository
 
 import (
-	"Currency-service/internal/db/models"
+	"Currency-service/internal/entity"
 	"context"
 )
 
 type CurrencyRepository interface {
-	CreateCurrency(ctx context.Context, code, name string) error
-	GetCurrencyByCode(ctx context.Context, code string) (*models.CurrencyDB, error)
-	GetAllCurrencies(ctx context.Context) ([]models.CurrencyDB, error)
+	CreateCurrency(ctx context.Context, code, name string) (*entity.Currency, error)
+	GetCurrencyByCode(ctx context.Context, code string) (*entity.Currency, error)
+	GetAllCurrencies(ctx context.Context) ([]entity.Currency, error)
 }
